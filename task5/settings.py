@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'task5.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'taskfive',
+        'NAME': 'taskfivee',
         'USER': 'kanimysuperuser',
         'PASSWORD':config('DB_PASSWORD'),
         'HOST': 'taskfive.c5q4e0k8kfi1.ap-south-1.rds.amazonaws.com',
