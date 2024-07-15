@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+  web:
+    build: .
+    command: gunicorn --bind 0.0.0.0:8000 task5.wsgi
+    volumes:
+      - .:/task4
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DJANGO_DB_HOST=${DB_HOST}
+      - DJANGO_DB_NAME=${DB_NAME}
+      - DJANGO_DB_USER=${DB_USER}
+      - DJANGO_DB_PASSWORD=${DB_PASSWORD}
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - web
+    volumes:
+      - ./task5/staticfiles:/task5/staticfiles
+      - ./task5/media:/task5/media
+
+volumes:
+  postgres_data:
+  
